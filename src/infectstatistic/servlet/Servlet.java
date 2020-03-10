@@ -3,6 +3,7 @@ package infectstatistic.servlet;
 import infectstatistic.dao.ProvinceDAO;
 import infectstatistic.dao.ProvinceDAOImpl;
 import infectstatistic.pojo.Province;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,6 @@ import java.util.List;
 public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String flag = req.getParameter("flag");
         ProvinceDAO provinceDAO =new ProvinceDAOImpl();
         //flag=2时跳转到第二个页面
@@ -27,7 +27,6 @@ public class Servlet extends HttpServlet {
             int ip = 0,sp = 0,cure = 0,dead = 0;
             //累加当地每天的数据
             for (Province province : local) {
-                //System.out.println(province.getIp()+" "+province.getSp());
                 ip += province.getIp();
                 sp += province.getSp();
                 cure += province.getCure();
@@ -38,19 +37,28 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totalsp",sp);
             req.setAttribute("totalcure",cure);
             req.setAttribute("totaldead",dead);
-            req.setAttribute("totalname",name);
             req.setAttribute("local",local);
             req.getRequestDispatcher("concreteInfectStatistic.jsp").forward(req,resp);
         }
         //否则跳转到第一个页面
         else{
-
-
-
+            provinceDAO =new ProvinceDAOImpl();
+            List<Province> country = provinceDAO.list("全国",true);//获取全国每天数据
+            int ip = 0,sp = 0,cure = 0,dead = 0;
+            //累加全国每天的数据
+            for (Province province : country) {
+                ip += province.getIp();
+                sp += province.getSp();
+                cure += province.getCure();
+                dead += province.getDead();
+            }
+            req.setAttribute("totalip",ip);
+            req.setAttribute("totalsp",sp);
+            req.setAttribute("totalcure",cure);
+            req.setAttribute("totaldead",dead);
+            req.setAttribute("country",country);
             req.getRequestDispatcher("chinaMap.jsp").forward(req,resp);
         }
-
-
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

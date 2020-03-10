@@ -23,30 +23,27 @@
               </div>
           </header>
           <div id="virusSummary">
-              <div id="existingIp">
-                  <div class="name">现存确诊</div>
-                  <div class="data">xxxx</div>
-                  <div class="trend">昨日+xxxx</div>
+              <%
+                  int totalip = (int) request.getAttribute("totalip");
+                  int totalsp = (int) request.getAttribute("totalsp");
+                  int totalcure = (int) request.getAttribute("totalcure");
+                  int totaldead = (int) request.getAttribute("totaldead");
+              %>
+              <div id="ip">
+                  <div class="name">确诊</div>
+                  <div class="data"><%=totalip%></div>
               </div>
-              <div id="totalIp">
-                  <div class="name">累计确诊</div>
-                  <div class="data">xxxx</div>
-                  <div class="trend">昨日+xxxx</div>
-              </div>
-              <div id="existingSp">
-                  <div class="name">现存疑似</div>
-                  <div class="data">xxxx</div>
-                  <div class="trend">昨日+xxxx</div>
+              <div id="sp">
+                  <div class="name">疑似</div>
+                  <div class="data"><%=totalsp%></div>
               </div>
               <div id="cure">
                   <div class="name">治愈</div>
-                  <div class="data">xxxx</div>
-                  <div class="trend">昨日+xxxx</div>
+                  <div class="data"><%=totalcure%></div>
               </div>
               <div id="dead">
                   <div class="name">死亡</div>
-                  <div class="data">xxxx</div>
-                  <div class="trend">昨日+xxxx</div>
+                  <div class="data"><%=totaldead%></div>
               </div>
           </div>
           <div>
@@ -163,11 +160,15 @@
               })*/
               //点击省份后跳转到具体疫情的页面
               myChart.on("click",function (params) {
-                  window.location.href="concreteInfectStatistic.jsp";
-                  console.log(params.name);
+                  window.location.href = "Servlet?flag=2&name="+params.name;
+
               })
           </script>
+          <footer style="margin-top: 50px">
+              <div id="footer">
+                  积极防护，保护自己，戴口罩，勤洗手
+              </div>
+          </footer>
       </div>
-
   </body>
 </html>
