@@ -1,5 +1,6 @@
 package infectstatistic.servlet;
 
+import infectstatistic.constant.ProvinceName;
 import infectstatistic.dao.ProvinceDAO;
 import infectstatistic.dao.ProvinceDAOImpl;
 import infectstatistic.pojo.Province;
@@ -44,6 +45,7 @@ public class Servlet extends HttpServlet {
         else{
             provinceDAO =new ProvinceDAOImpl();
             List<Province> country = provinceDAO.list("全国",true);//获取全国每天数据
+            //List<Province> all = provinceDAO.list();//获取各省份每天的数据
             int ip = 0,sp = 0,cure = 0,dead = 0;
             //累加全国每天的数据
             for (Province province : country) {
@@ -52,11 +54,26 @@ public class Servlet extends HttpServlet {
                 cure += province.getCure();
                 dead += province.getDead();
             }
+
+            String name;
+            int eachIp;
+            //查找每个省份的每天的确诊数据累加到一个数值上
+            for(int i = 0; i < ProvinceName.provinceSize; i++) {
+                name = ProvinceName.provinceName[i];
+                eachIp = 0;
+                List<Province> each = provinceDAO.list(name, true);//按省份名获取省份每天数据
+                for(Province province : each){
+                    eachIp += province.getIp();
+                }
+                req.setAttribute(name+"Ip",eachIp);
+            }
             req.setAttribute("totalip",ip);
             req.setAttribute("totalsp",sp);
             req.setAttribute("totalcure",cure);
             req.setAttribute("totaldead",dead);
             req.setAttribute("country",country);
+
+
             req.getRequestDispatcher("chinaMap.jsp").forward(req,resp);
         }
     }

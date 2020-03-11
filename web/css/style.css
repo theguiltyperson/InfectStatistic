@@ -47,8 +47,8 @@ h1 {
     padding-top: 20px;
     padding-bottom: 50px;
 }
-#existingIp,#totalIp,#existingSp,#cure,#dead {
-    width:150px;
+#ip, #sp, #cure, #dead {
+    width:190px;
     height:80px;
     position: relative;
     display: inline-block;
@@ -62,15 +62,11 @@ h1 {
     padding-top: 5px;
     font-size: 1.5em;
 }
-#virusSummary .trend {
-    padding-top: 2px;
-    font-size: 0.7em;
-}
 .input1 {
     display: none;
     box-sizing: border-box;
 }
-.choose,.choose1 {
+.choose, .choose1 {
     box-sizing: border-box;
     width:800px;
     height: 44px;
@@ -131,4 +127,13 @@ h1 {
     align-items: center;
     justify-content: center;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+#footer {
+    width: 800px;
+    height: 40px;
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+    font-size: 1.2em;
+    background-color: #e3e6eb;
 }

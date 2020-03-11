@@ -1,4 +1,6 @@
-<%--
+<%@ page import="infectstatistic.pojo.Province" %>
+<%@ page import="java.util.List" %>
+<%@ page import="infectstatistic.constant.ProvinceName" %><%--
   Created by IntelliJ IDEA.
   User: ASUS
   Date: 2020/3/7
@@ -46,12 +48,12 @@
                   <div class="data"><%=totaldead%></div>
               </div>
           </div>
-          <div>
+          <!--<div>
               <input type="checkbox" id="input1" class="input1" value="on">
               <label id="choose" class="choose" for="input1"></label>
-          </div>
+          </div>-->
           <script type="text/javascript">
-              $(document).ready(function () {
+              /*$(document).ready(function () {
                   $("#choose").click(function (){
                       //显示累计确诊
                       if($("#choose").attr("class") === "choose"){
@@ -62,12 +64,11 @@
                           $("#choose").attr("class","choose");
                       }
                   })
-              })
+              })*/
           </script>
           <div id="chinaMap"></div>
           <script type="text/javascript">
               var myChart = echarts.init(document.getElementById('chinaMap'));
-              $.get('province_total.json').done(function (data) {
                   myChart.setOption({
                       // 数据提示框
                       tooltip: {
@@ -86,7 +87,6 @@
                           }
                       },*/
 
-                      // visualMap默认是连续映射，可以设置为分段型，对于分布范围广的数据
                       // 使用透明度来区分疫情严重情况
                       visualMap: {
                           type: 'piecewise',
@@ -115,54 +115,107 @@
                                   formatter: '{b}', // b是数据名，c是数据值
                                   fontSize: 12
                               },
-                              data: [
-                                  {name: data['name'][0], value: data['value'][0]},
-                                  {name: data['name'][1], value: data['value'][1]},
-                                  {name: data['name'][2], value: data['value'][2]},
-                                  {name: data['name'][3], value: data['value'][3]},
-                                  {name: data['name'][4], value: data['value'][4]},
-                                  {name: data['name'][5], value: data['value'][5]},
-                                  {name: data['name'][6], value: data['value'][6]},
-                                  {name: data['name'][7], value: data['value'][7]},
-                                  {name: data['name'][8], value: data['value'][8]},
-                                  {name: data['name'][9], value: data['value'][9]},
-                                  {name: data['name'][10], value: data['value'][10]},
-                                  {name: data['name'][11], value: data['value'][11]},
-                                  {name: data['name'][12], value: data['value'][12]},
-                                  {name: data['name'][13], value: data['value'][13]},
-                                  {name: data['name'][14], value: data['value'][14]},
-                                  {name: data['name'][15], value: data['value'][15]},
-                                  {name: data['name'][16], value: data['value'][16]},
-                                  {name: data['name'][17], value: data['value'][17]},
-                                  {name: data['name'][18], value: data['value'][18]},
-                                  {name: data['name'][19], value: data['value'][19]},
-                                  {name: data['name'][20], value: data['value'][20]},
-                                  {name: data['name'][21], value: data['value'][21]},
-                                  {name: data['name'][22], value: data['value'][22]},
-                                  {name: data['name'][23], value: data['value'][23]},
-                                  {name: data['name'][24], value: data['value'][24]},
-                                  {name: data['name'][25], value: data['value'][25]},
-                                  {name: data['name'][26], value: data['value'][26]},
-                                  {name: data['name'][27], value: data['value'][27]},
-                                  {name: data['name'][28], value: data['value'][28]},
-                                  {name: data['name'][29], value: data['value'][29]},
-                                  {name: data['name'][30], value: data['value'][30]},
-                                  {name: data['name'][31], value: data['value'][31]},
-                                  {name: data['name'][32], value: data['value'][32]},
-                                  {name: data['name'][33], value: data['value'][33]}
-                              ],
+                              data:[
+                                  <%
+                                  int Ip;
+                                  for(int i = 0; i < ProvinceName.provinceSize; i++){
+                                      //ip = 0;
+                                      Ip = (int) request.getAttribute(ProvinceName.provinceName[i] + "Ip");
+                                  %>
+                                  {name: "<%=ProvinceName.provinceName[i]%>", value: "<%=Ip%>"},
+                                  <%}%>
+                              ]
                           }
                       ]
                   });
-              });
-              /*$("#chinaMap").click(function () {
-                  window.location.href="concreteInfectStatistic.jsp";
-              })*/
+
               //点击省份后跳转到具体疫情的页面
               myChart.on("click",function (params) {
                   window.location.href = "Servlet?flag=2&name="+params.name;
+              },true)
+          </script>
+          <!--为折线图准备的DOM-->
+          <div id="lineChart" style="width: 800px;height:400px; position: center; background-color: #ffffff; padding-top: 40px"></div>
+          <script type="text/javascript">
 
-              })
+              var name = "全国";
+              // 基于准备好的dom，初始化echarts实例
+              var Chart = echarts.init(document.getElementById('lineChart'),'infographic');
+
+              Chart.setOption({
+                  //设置标题
+                  title: {
+                      text: name + '疫情趋势'
+                  },
+                  //数据提示框
+                  tooltip: {
+                      trigger: 'axis',
+                  },
+                  legend: {
+                      data: ['确诊','疑似','治愈','死亡']
+                  },
+                  xAxis: {
+                      data:[<%
+                        List<Province> country = (List<Province>) request.getAttribute("country");
+                        String date;
+                        int ip,totalIp = 0;
+                        int sp,totalSp = 0;
+                        int cure,totalCure = 0;
+                        int dead,totalDead = 0;
+                        for(Province province : country){
+                            date = province.getDate();
+                        %>
+                          "<%=date%>",
+                          <%}%>]
+                  },
+                  yAxis: {},
+                  series: [
+                      {
+                          name: '确诊',
+                          type: 'line',
+                          data:[<%
+                            for(Province province : country){
+                                ip = province.getIp();
+                                totalIp += ip;
+                            %>
+                              <%=totalIp%>,
+                              <%}%>]
+                      },
+                      {
+                          name: '疑似',
+                          type: 'line',
+                          data:[<%
+                            for(Province province : country){
+                                sp = province.getSp();
+                                totalSp += sp;
+                            %>
+                              <%=totalSp%>,
+                              <%}%>]
+                      },
+                      {
+                          name: '治愈',
+                          type: 'line',
+                          data:[<%
+                            for(Province province : country){
+                                cure = province.getCure();
+                                totalCure += cure;
+                            %>
+                              <%=totalCure%>,
+                              <%}%>]
+                      },
+                      {
+                          name: '死亡',
+                          type: 'line',
+                          data:[<%
+                            for(Province province : country){
+                                dead = province.getDead();
+                                totalDead += dead;
+                            %>
+                              <%=totalDead%>,
+                              <%}%>]
+                      }
+                  ]
+              },true)
           </script>
           <footer style="margin-top: 50px">
               <div id="footer">
