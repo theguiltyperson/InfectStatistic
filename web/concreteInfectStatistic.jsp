@@ -45,7 +45,7 @@
             </div>
         </div>
         <!--为折线图准备的DOM-->
-        <div id="lineChart" style="width: 700px;height:400px; position: center"></div>
+        <div id="lineChart" style="width: 800px;height:450px; position: center"></div>
         <footer style="margin-top: 50px">
             <div id="footer">
                 积极防护，保护自己，戴口罩，勤洗手
