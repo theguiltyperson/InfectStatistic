@@ -27,12 +27,7 @@ public class Process {
      * @version 1.0.0
      */
     static class RegularMatch {
-        Pattern p1 = Pattern.compile("(.*) 新增 感染患者 (\\d*)人");
-        Pattern p2 = Pattern.compile("(.*) 新增 疑似患者 (\\d*)人");
-        Pattern p3 = Pattern.compile("(.*) 死亡 (\\d*)人");
-        Pattern p4 = Pattern.compile("(.*) 治愈 (\\d*)人");
-        Pattern p5 = Pattern.compile("(.*) 疑似患者 确诊感染 (\\d*)人");
-        Pattern p6 = Pattern.compile("(.*) 排除 疑似患者 (\\d*)人");
+
         /**
          * TODO
          * 处理：新增感染者
@@ -44,6 +39,7 @@ public class Process {
                 Province pr = new Province(m.group(1),Integer.parseInt(m.group(2)),0,0,0);
                 list.add(pr);
             }
+
             else{
                 for(int j = 0; j < list.size(); j++){
                     if(list.get(j).getName().equals(m.group(1))){
@@ -161,12 +157,18 @@ public class Process {
                             (new ByteArrayInputStream(allContent[i].getBytes())));
                     String s;
                     while((s = br.readLine()) != null){
-                        Matcher m1 = regularMatch.p1.matcher(s);
-                        Matcher m2 = regularMatch.p2.matcher(s);
-                        Matcher m3 = regularMatch.p3.matcher(s);
-                        Matcher m4 = regularMatch.p4.matcher(s);
-                        Matcher m5 = regularMatch.p5.matcher(s);
-                        Matcher m6 = regularMatch.p6.matcher(s);
+                        Pattern p1 = Pattern.compile("(.*) 新增 感染患者 (\\d*)人");
+                        Pattern p2 = Pattern.compile("(.*) 新增 疑似患者 (\\d*)人");
+                        Pattern p3 = Pattern.compile("(.*) 死亡 (\\d*)人");
+                        Pattern p4 = Pattern.compile("(.*) 治愈 (\\d*)人");
+                        Pattern p5 = Pattern.compile("(.*) 疑似患者 确诊感染 (\\d*)人");
+                        Pattern p6 = Pattern.compile("(.*) 排除 疑似患者 (\\d*)人");
+                        Matcher m1 = p1.matcher(s);
+                        Matcher m2 = p2.matcher(s);
+                        Matcher m3 = p3.matcher(s);
+                        Matcher m4 = p4.matcher(s);
+                        Matcher m5 = p5.matcher(s);
+                        Matcher m6 = p6.matcher(s);
                         //新增感染患者
                         while(m1.find()){
                             addIp(m1, list);
@@ -211,7 +213,7 @@ public class Process {
     }
     /**
      * TODO
-     * 读取目录下的指定日志内容
+     * 读取目录下指定日期前的所有日志内容
      * @author hmx1
      * @version 1.0.0
      */
@@ -235,12 +237,12 @@ public class Process {
     }
     /**
      * TODO
-     * 获取文件夹下与date相同日期的文件名
+     * 获取文件夹中，在date日期及以前的文件名
      * @author hmx1
      * @version 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static List getFileName(String path, String date){
+    public static List getFileName(String path, String date) throws ParseException {
         File file = new File(path);
         List listLocal = new ArrayList<>();
         if (file != null) {
@@ -250,7 +252,7 @@ public class Process {
                     String str = String.valueOf(value);
                     String str1 = str.substring(str.length() - 18, str.length() - 8);
                     String str2 = str.substring(str.length() - 8);
-                    if (str2.matches(".log.txt") && (str1.compareTo(date)==0)) {
+                    if (str2.matches(".log.txt") && isBefore(str1,date)) {
                         listLocal.add(value);
                     }
                 }
@@ -273,17 +275,36 @@ public class Process {
         }
         return false;
     }
+    /**
+     * TODO
+     * 比较日期前后，time1日期比time2前则返回true，否则返回false
+     * @author hmx1
+     * @version 1.0.0
+     */
+    public static boolean isBefore(String time1, String time2) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
+        Date date1 =  simpleDateFormat.parse(time1);
+        Date date2 =  simpleDateFormat.parse(time2);
+        return !date1.after(date2);
+    }
 
     public static void main(String[] args) throws IOException, ParseException {
-        String[] allContent = readFile("src/infectstatistic/log","2020-01-22");
+        //             测试readFile
+        String[] allContent = readFile("src/log","2020-01-23");
         for (int i=0; i<allContent.length; i++){
             System.out.println(allContent[i]);
-            System.out.println("读取成功");
         }
-        RegularMatch re = new RegularMatch();
-        List a = re.match(allContent);
-        for (int i=0; i<a.size(); i++){
-            System.out.println(a.get(i));
-        }
+
+//        //String[] allContent = readFile("src/log","2020-01-22");
+//      //  List<Province> pr =  RegularMatch.match(allContent);
+//      //  测试正则匹配后，读取List<Province>内容
+//        for (Province province: RegularMatch.match(allContent)) {
+//            System.out.println(province.getName() +
+//                    "  感染"+ province.getIp() +
+//                    "  疑似"+ province.getCure() +
+//                    "  治愈"+ province.getCure() +
+//                    "  死亡" +province.getDead()
+//            );
+//        }
     }
 }

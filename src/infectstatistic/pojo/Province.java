@@ -7,6 +7,23 @@ public class Province {
     private int sp;//“…À∆
     private int cure;//÷Œ”˙
     private int dead;//À¿Õˆ
+    public Province(){
+        this.name = null;
+        this.ip = 0;
+        this.sp = 0;
+        this.cure = 0;
+        this.dead = 0;
+    }
+    public Province(String name, int ip, int sp, int cure, int dead){
+        this.name = name;
+        this.ip = ip;
+        this.sp = sp;
+        this.cure = cure;
+        this.dead = dead;
+    }
+    public static Province init(){//?????province??
+        return new Province(null,0,0,0,0);
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -1,7 +1,7 @@
 package infectstatistic.util;
+import infectstatistic.pojo.Province;
 
 import java.sql.*;
-import InfectStatisticWeb.pojo.Province;
 public class DBUtil {
     static String ip = "127.0.0.1";
     static int port = 3306;
@@ -24,7 +24,7 @@ public class DBUtil {
     }
 
     /* 关闭连接的方法 */
-    public static void close(ResultSet rs, Province stmt, Connection conn) {
+    public static void close(ResultSet rs, Statement stmt, Connection conn) {
         try {
             if (rs != null)
                 rs.close();
