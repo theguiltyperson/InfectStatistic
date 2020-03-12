@@ -41,12 +41,12 @@ public class ProvinceDAOImpl implements ProvinceDAO{
     public List<Province> list(String date) {
         String sql = "SELECT * FROM province WHERE date = ?";
         List<Province> list = new ArrayList<>();
-        Province province = new Province();
+
         try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1,date);
             ResultSet rs = ps.executeQuery(); //得到结果集
             while(rs.next()){
-                province = new Province();
+                Province province = new Province();
                 String name = rs.getString("name");
                 int ip = rs.getInt("ip");
                 int sp = rs.getInt("sp");

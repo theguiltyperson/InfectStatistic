@@ -39,6 +39,9 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totalcure",cure);
             req.setAttribute("totaldead",dead);
             req.setAttribute("local",local);
+            //resp.setContentType("text/html;charset=UTF-8");
+            req.setCharacterEncoding("UTF-8");
+            resp.setCharacterEncoding("UTF-8");
             req.getRequestDispatcher("concreteInfectStatistic.jsp").forward(req,resp);
         }
         //否则跳转到第一个页面
@@ -73,7 +76,9 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totaldead",dead);
             req.setAttribute("country",country);
 
-
+            //resp.setContentType("text/html;charset=UTF-8");
+            req.setCharacterEncoding("UTF-8");
+            resp.setCharacterEncoding("UTF-8");
             req.getRequestDispatcher("chinaMap.jsp").forward(req,resp);
         }
     }
