@@ -1,11 +1,25 @@
 package infectstatistic.textProcess;
 import infectstatistic.pojo.Province;
 
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Process {
+    /**
+     * TODO
+     * 存储log文件夹下的日期
+     * @author hmx1
+     * @version 1.0.0
+     */
+    public static String[] date ={"2020-01-19", "2020-01-20", "2020-01-21", "2020-01-22", "2020-01-23",
+            "2020-01-24", "2020-01-25", "2020-01-26", "2020-01-27", "2020-01-28","2020-01-29",
+            "2020-01-30", "2020-01-31", "2020-02-01", "2020-02-02"};
     /**
      * TODO
      * 正則匹配工具类
@@ -197,7 +211,7 @@ public class Process {
     }
     /**
      * TODO
-     * 读取目录下的所有日志内容
+     * 读取目录下的指定日志内容
      * @author hmx1
      * @version 1.0.0
      */
@@ -208,7 +222,7 @@ public class Process {
             File file = new File(String.valueOf(allFilePath.get(i)));
             StringBuilder result = new StringBuilder();
             // 构造一个BufferedReader类来读取文件
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"GBK"));
             String s;
             // 使用readLine方法，一次读一行，并忽略注释行
             while ((s = br.readLine()) != null && !s.startsWith("//")) {
@@ -217,17 +231,16 @@ public class Process {
             br.close();
             allContent[i] = result.toString();
         }
-
         return allContent;
     }
     /**
      * TODO
-     * 读取文件夹下所有文件的文件名
+     * 获取文件夹下与date相同日期的文件名
      * @author hmx1
      * @version 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static List getFileName(String path, String date) throws ParseException {
+    public static List getFileName(String path, String date){
         File file = new File(path);
         List listLocal = new ArrayList<>();
         if (file != null) {
@@ -237,7 +250,7 @@ public class Process {
                     String str = String.valueOf(value);
                     String str1 = str.substring(str.length() - 18, str.length() - 8);
                     String str2 = str.substring(str.length() - 8);
-                    if (str2.matches(".log.txt") && compareDate(str1, date)) {
+                    if (str2.matches(".log.txt") && (str1.compareTo(date)==0)) {
                         listLocal.add(value);
                     }
                 }
@@ -245,13 +258,14 @@ public class Process {
         }
         return listLocal;
     }
+
     /**
      * TODO
      * 判断list中是否含有指定Name属性的province
      * @author hmx1
      * @version 1.0.0
      */
-    public static boolean isListName(ArrayList<statement> list, String name){
+    public static boolean isListName(ArrayList<Province> list, String name){
         for(int i = 0; i < list.size(); i++){
             if (list.get(i).getName().equals(name)){
                 return true;
@@ -260,11 +274,16 @@ public class Process {
         return false;
     }
 
-    public static void main(String[] args) {
-//        String[] allContent = readFile("src/log","2020-01-22");
-//        for (int i=0; i<allContent.length; i++){
-//            System.out.println(allContent[i]);
-//            System.out.println("读取成功");
-//        }
+    public static void main(String[] args) throws IOException, ParseException {
+        String[] allContent = readFile("src/infectstatistic/log","2020-01-22");
+        for (int i=0; i<allContent.length; i++){
+            System.out.println(allContent[i]);
+            System.out.println("读取成功");
+        }
+        RegularMatch re = new RegularMatch();
+        List a = re.match(allContent);
+        for (int i=0; i<a.size(); i++){
+            System.out.println(a.get(i));
+        }
     }
 }
