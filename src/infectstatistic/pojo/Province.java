@@ -1,12 +1,12 @@
 package infectstatistic.pojo;
 
 public class Province {
-    private String name;//Ê¡·İÃû
-    private String date;//ÈÕÆÚ
-    private int ip;//¸ĞÈ¾
-    private int sp;//ÒÉËÆ
-    private int cure;//ÖÎÓú
-    private int dead;//ËÀÍö
+    private String name;//çœä»½åå­—
+    private String date;//æ—¥æœŸ
+    private int ip;//æ„ŸæŸ“è€…
+    private int sp;//ç–‘ä¼¼æ‚£è€…
+    private int cure;//æ²»æ„ˆ
+    private int dead;//æ­»äº¡
     public Province(){
         this.name = null;
         this.ip = 0;

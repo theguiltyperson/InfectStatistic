@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProvinceDAOImpl implements ProvinceDAO {
 
-    //ͨ��ʡ���������ڻ�ȡʡ������
+
     @Override
     public Province get(String name, String date) {
         String sql = "SELECT * FROM province WHERE name = ? and date = ?";
@@ -34,7 +34,6 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         return province;
     }
 
-    //����ָ�����ڵ�����ʡ������
     @Override
     public List<Province> list(String date) {
         String sql = "SELECT * FROM province WHERE date = ?";
@@ -66,7 +65,6 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         return list;
     }
 
-    //ͨ��ʡ������ȡʡ������
     @Override
     public List<Province> list(String name, boolean b) {
         String sql = "SELECT * FROM province WHERE name = ? ORDER BY date";
@@ -97,7 +95,6 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         return list;
     }
 
-    //�г�����ʡ������
     @Override
     public List<Province> list() {
         String sql = "SELECT * FROM province ORDER BY date";
@@ -127,7 +124,7 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         }
         return list;
     }
-    //������õ�������ӵ����ݿ�
+
     public static void ListAdd(ArrayList<Province> list, String date) {
         String sql = "insert into province(name,date,ip,sp,cure,dead)" +
                 "values(?,?,?,?,?,?)";
@@ -152,7 +149,6 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         try (Connection c = DBUtil.getConnection()) {
             Statement st = c.createStatement();
             st.executeUpdate(sql);
-            c.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

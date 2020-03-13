@@ -286,7 +286,7 @@ public class Process {
      * @author hmx1
      * @version 1.0.0
      */
-    public static boolean isBefore(String time1, String time2) {
+    public static boolean isBefore(String time1, String time2) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
         Date date1 =  simpleDateFormat.parse(time1);
         Date date2 =  simpleDateFormat.parse(time2);

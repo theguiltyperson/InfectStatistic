@@ -21,11 +21,6 @@ import static infectstatistic.textProcess.Process.connectMysql;
 public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
-//            connectMysql();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         String flag = req.getParameter("flag");
         ProvinceDAO provinceDAO =new ProvinceDAOImpl();
         //flag=2时跳转到第二个页面
