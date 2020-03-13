@@ -16,6 +16,10 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
+    /*
+     *先运行infectstatistic.textProcess.Process.main;
+     * 将数据写入数据库后，再把项目部署到tomcat
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String flag = req.getParameter("flag");
@@ -39,7 +43,6 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totalcure",cure);
             req.setAttribute("totaldead",dead);
             req.setAttribute("local",local);
-            //resp.setContentType("text/html;charset=UTF-8");
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
             req.getRequestDispatcher("concreteInfectStatistic.jsp").forward(req,resp);
@@ -76,7 +79,6 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totaldead",dead);
             req.setAttribute("country",country);
 
-            //resp.setContentType("text/html;charset=UTF-8");
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
             req.getRequestDispatcher("chinaMap.jsp").forward(req,resp);
