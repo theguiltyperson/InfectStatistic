@@ -279,19 +279,19 @@ public class Process {
         }
         return false;
     }
-
-    /**
-     * TODO
-     * 比较日期前后，time1日期比time2前则返回true，否则返回false
-     * @author hmx1
-     * @version 1.0.0
-     */
-    public static boolean isBefore(String time1, String time2) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
-        Date date1 =  simpleDateFormat.parse(time1);
-        Date date2 =  simpleDateFormat.parse(time2);
-        return !date1.after(date2);
-    }
+//
+//    /**
+//     * TODO
+//     * 比较日期前后，time1日期比time2前则返回true，否则返回false
+//     * @author hmx1
+//     * @version 1.0.0
+//     */
+//    public static boolean isBefore(String time1, String time2) throws ParseException {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
+//        Date date1 =  simpleDateFormat.parse(time1);
+//        Date date2 =  simpleDateFormat.parse(time2);
+//        return !date1.after(date2);
+//    }
 
     /**
      * TODO
@@ -307,7 +307,7 @@ public class Process {
         }
     }
 
-  public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException {
        delete();//清空province表
        connectMysql();
 
