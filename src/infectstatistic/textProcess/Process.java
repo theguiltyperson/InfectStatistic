@@ -279,13 +279,14 @@ public class Process {
         }
         return false;
     }
+
     /**
      * TODO
      * 比较日期前后，time1日期比time2前则返回true，否则返回false
      * @author hmx1
      * @version 1.0.0
      */
-    public static boolean isBefore(String time1, String time2) throws ParseException {
+    public static boolean isBefore(String time1, String time2) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
         Date date1 =  simpleDateFormat.parse(time1);
         Date date2 =  simpleDateFormat.parse(time2);
@@ -303,9 +304,7 @@ public class Process {
             String[] allContent = readFile("src/infectstatistic/log",date[i]);
             ArrayList<Province> province = RegularMatch.match(allContent);
             ListAdd(province, date[i]);
-            //province.clear();
         }
-        //delete();
     }
 
   public static void main(String[] args) throws IOException, ParseException {
