@@ -16,6 +16,10 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
+    /*
+     *先运行infectstatistic.textProcess.Process.main;
+     * 将数据写入数据库后，再把项目部署到tomcat
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String flag = req.getParameter("flag");
