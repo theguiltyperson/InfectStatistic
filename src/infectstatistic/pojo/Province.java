@@ -1,12 +1,29 @@
 package infectstatistic.pojo;
 
 public class Province {
-    private String name;//Ê¡·İÃû
-    private String date;//ÈÕÆÚ
-    private int ip;//¸ĞÈ¾
-    private int sp;//ÒÉËÆ
-    private int cure;//ÖÎÓú
-    private int dead;//ËÀÍö
+    private String name;//çœä»½åå­—
+    private String date;//æ—¥æœŸ
+    private int ip;//æ„ŸæŸ“è€…
+    private int sp;//ç–‘ä¼¼æ‚£è€…
+    private int cure;//æ²»æ„ˆ
+    private int dead;//æ­»äº¡
+    public Province(){
+        this.name = null;
+        this.ip = 0;
+        this.sp = 0;
+        this.cure = 0;
+        this.dead = 0;
+    }
+    public Province(String name, int ip, int sp, int cure, int dead){
+        this.name = name;
+        this.ip = ip;
+        this.sp = sp;
+        this.cure = cure;
+        this.dead = dead;
+    }
+    public static Province init(){//?????province??
+        return new Province(null,0,0,0,0);
+    }
 
     public void setName(String name) {
         this.name = name;

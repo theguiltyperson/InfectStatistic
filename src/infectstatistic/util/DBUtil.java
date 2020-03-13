@@ -1,4 +1,9 @@
 package infectstatistic.util;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.sql.*;
 
@@ -12,7 +17,7 @@ public class DBUtil {
 
     static {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -45,7 +50,8 @@ public class DBUtil {
         }
     }
 
-    public static void main(String[] args) throws SQLException {
-        System.out.println(getConnection());
-    }
+//    public static void main(String[] args) throws SQLException {
+//        System.out.println(getConnection());
+//    }
 }
+
