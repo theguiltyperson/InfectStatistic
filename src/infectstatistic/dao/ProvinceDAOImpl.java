@@ -138,7 +138,6 @@ public class ProvinceDAOImpl implements ProvinceDAO {
                 ps.setInt(6, province.getDead());
                 ps.executeUpdate();
             }
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

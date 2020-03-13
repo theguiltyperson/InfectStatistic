@@ -308,8 +308,8 @@ public class Process {
     }
 
   public static void main(String[] args) throws IOException, ParseException {
-      // delete();
-      // connectMysql();
+       delete();//清空province表
+       connectMysql();
 
 //        String[] allContent = readFile("src/infectstatistic/log","2020-01-23");
 //        for (int i=0; i<allContent.length; i++){
