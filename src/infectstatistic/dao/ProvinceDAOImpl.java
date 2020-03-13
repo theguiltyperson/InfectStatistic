@@ -3,16 +3,13 @@ package infectstatistic.dao;
 import infectstatistic.pojo.Province;
 import infectstatistic.util.DBUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProvinceDAOImpl implements ProvinceDAO {
 
-    //Í¨¹ýÊ¡·ÝÃûºÍÈÕÆÚ»ñÈ¡Ê¡·ÝÊý¾Ý
+    //Í¨ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú»ï¿½È¡Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @Override
     public Province get(String name, String date) {
         String sql = "SELECT * FROM province WHERE name = ? and date = ?";
@@ -20,7 +17,7 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, name);
             ps.setString(2, date);
-            ResultSet rs = ps.executeQuery();//µÃµ½½á¹û¼¯
+            ResultSet rs = ps.executeQuery();//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             int ip = rs.getInt("ip");
             int sp = rs.getInt("sp");
             int cure = rs.getInt("cure");
@@ -37,7 +34,7 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         return province;
     }
 
-    //·µ»ØÖ¸¶¨ÈÕÆÚµÄËùÓÐÊ¡·ÝÊý¾Ý
+    //ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @Override
     public List<Province> list(String date) {
         String sql = "SELECT * FROM province WHERE date = ?";
@@ -69,7 +66,7 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         return list;
     }
 
-    //Í¨¹ýÊ¡·ÝÃû»ñÈ¡Ê¡·ÝÊý¾Ý
+    //Í¨ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @Override
     public List<Province> list(String name, boolean b) {
         String sql = "SELECT * FROM province WHERE name = ? ORDER BY date";
@@ -100,7 +97,7 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         return list;
     }
 
-    //ÁÐ³öËùÓÐÊ¡·ÝÊý¾Ý
+    //ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @Override
     public List<Province> list() {
         String sql = "SELECT * FROM province ORDER BY date";
@@ -130,24 +127,35 @@ public class ProvinceDAOImpl implements ProvinceDAO {
         }
         return list;
     }
-    //½«´¦ÀíºÃµÄÊý¾ÝÌí¼Óµ½Êý¾Ý¿â
-    public void ListAdd(ArrayList<Province> list, String date) {
-        int num = 0;
-        String sql = "insert into province(province,date,existingIp,totalIp,existingSp,cure,dead)" +
-                "values(?,?,?,?,?,?,?)";
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
+    public static void ListAdd(ArrayList<Province> list, String date) {
+        String sql = "insert into province(name,date,ip,sp,cure,dead)" +
+                "values(?,?,?,?,?,?)";
         try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
             for (Province province : list) {
                 ps.setString(1, province.getName());
                 ps.setString(2, date);
                 ps.setInt(3, province.getIp());
-                ps.setInt(4, province.getIp() + province.getCure());
-                ps.setInt(5, province.getIp());
-                ps.setInt(6, province.getCure());
-                ps.setInt(7, province.getDead());
+                ps.setInt(4, province.getSp());
+                ps.setInt(5, province.getCure());
+                ps.setInt(6, province.getDead());
                 ps.executeUpdate();
             }
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+    public static void delete() {
+        String sql = "delete from province";
+        try (Connection c = DBUtil.getConnection()) {
+            Statement st = c.createStatement();
+            st.executeUpdate(sql);
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

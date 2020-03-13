@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static infectstatistic.dao.ProvinceDAOImpl.ListAdd;
+import static infectstatistic.dao.ProvinceDAOImpl.delete;
+
+
 public class Process {
     /**
      * TODO
@@ -149,7 +153,7 @@ public class Process {
          * @version 1.0.0
          */
         public static ArrayList<Province> match(String[] allContent){
-            RegularMatch regularMatch = null;
+            //RegularMatch regularMatch = null;
             ArrayList<Province> list = new ArrayList<>();
             try{
                 for(int i = 0; i<allContent.length; i++){
@@ -224,7 +228,7 @@ public class Process {
             File file = new File(String.valueOf(allFilePath.get(i)));
             StringBuilder result = new StringBuilder();
             // 构造一个BufferedReader类来读取文件
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"GBK"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
             String s;
             // 使用readLine方法，一次读一行，并忽略注释行
             while ((s = br.readLine()) != null && !s.startsWith("//")) {
@@ -252,7 +256,7 @@ public class Process {
                     String str = String.valueOf(value);
                     String str1 = str.substring(str.length() - 18, str.length() - 8);
                     String str2 = str.substring(str.length() - 8);
-                    if (str2.matches(".log.txt") && isBefore(str1,date)) {
+                    if (str2.matches(".log.txt") && str1.equals(date)) {
                         listLocal.add(value);
                     }
                 }
@@ -288,23 +292,43 @@ public class Process {
         return !date1.after(date2);
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
-        //             测试readFile
-        String[] allContent = readFile("src/log","2020-01-23");
-        for (int i=0; i<allContent.length; i++){
-            System.out.println(allContent[i]);
+    /**
+     * TODO
+     * 连接数据库操作
+     * @author hmx1
+     * @version 1.0.0
+     */
+    public static void connectMysql() throws IOException, ParseException {
+        for (int i=0; i<date.length; i++){
+            String[] allContent = readFile("src/infectstatistic/log",date[i]);
+            ArrayList<Province> province = RegularMatch.match(allContent);
+            ListAdd(province, date[i]);
+            //province.clear();
         }
+        //delete();
+    }
 
-//        //String[] allContent = readFile("src/log","2020-01-22");
-//      //  List<Province> pr =  RegularMatch.match(allContent);
-//      //  测试正则匹配后，读取List<Province>内容
-//        for (Province province: RegularMatch.match(allContent)) {
-//            System.out.println(province.getName() +
-//                    "  感染"+ province.getIp() +
-//                    "  疑似"+ province.getCure() +
-//                    "  治愈"+ province.getCure() +
-//                    "  死亡" +province.getDead()
+  public static void main(String[] args) throws IOException, ParseException {
+      // delete();
+      // connectMysql();
+
+//        String[] allContent = readFile("src/infectstatistic/log","2020-01-23");
+//        for (int i=0; i<allContent.length; i++){
+//            System.out.println(allContent[i]);
+//        }
+//        //RegularMatch.match(readFile("src/infectstatistic/log","2020-01-23"));
+//        for (Province province : RegularMatch.match( readFile("src/infectstatistic/log","2020-01-23"))){
+//            System.out.println(province.getName()+
+//                    " 感染"+province.getIp()+
+//                    " 疑似"+province.getSp()+
+//                    " 治愈"+province.getCure()+
+//                    " 死亡"+province.getDead()
 //            );
 //        }
+//        List name = getFileName("src/infectstatistic/log","2020-01-23");
+//        for (int i=0; i<name.size(); i++){
+//            System.out.println(name.get(i));
+//        }
+        //System.out.println("allContent[i]");
     }
 }
