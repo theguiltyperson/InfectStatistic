@@ -12,20 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
-
-import static infectstatistic.textProcess.Process.connectMysql;
 
 @WebServlet(urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
-//            connectMysql();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         String flag = req.getParameter("flag");
         ProvinceDAO provinceDAO =new ProvinceDAOImpl();
         //flag=2时跳转到第二个页面
@@ -47,7 +39,6 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totalcure",cure);
             req.setAttribute("totaldead",dead);
             req.setAttribute("local",local);
-            //resp.setContentType("text/html;charset=UTF-8");
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
             req.getRequestDispatcher("concreteInfectStatistic.jsp").forward(req,resp);
@@ -84,7 +75,6 @@ public class Servlet extends HttpServlet {
             req.setAttribute("totaldead",dead);
             req.setAttribute("country",country);
 
-            //resp.setContentType("text/html;charset=UTF-8");
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
             req.getRequestDispatcher("chinaMap.jsp").forward(req,resp);
