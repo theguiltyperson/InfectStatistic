@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.sql.*;
+
 public class DBUtil {
     static String ip = "127.0.0.1";
     static int port = 3306;
@@ -52,3 +54,4 @@ public class DBUtil {
 //        System.out.println(getConnection());
 //    }
 }
+
