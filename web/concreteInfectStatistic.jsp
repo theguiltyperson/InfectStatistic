@@ -20,6 +20,17 @@
         <div style="margin-bottom: 10px">
             <h2><%=request.getAttribute("name")%></h2>
         </div>
+        <div>
+            <input type="date" id="date" value="2020-03-13">
+            <input id="button" type="button" value="确定" onclick="buttonClick();">
+            <p style="display: inline;font-size: 12px">选择日期后的数据是当天累计量</p>
+        </div>
+        <script>
+            function buttonClick() {
+                var date = document.getElementById("date").value;
+                window.location.href = "Servlet?flag=2&Date="+date+"&name="+name;
+            }
+        </script>
         <div id="virusSummary" style="background-color: #e3e6eb; margin-bottom: 30px">
             <%
                 int totalip = (int) request.getAttribute("totalip");

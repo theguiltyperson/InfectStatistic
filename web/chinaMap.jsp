@@ -24,6 +24,17 @@
                   <h1 class="virus2" data-text="疫情数据报告">疫情数据报告</h1>
               </div>
           </header>
+          <div>
+              <input type="date" id="date" value="2020-03-13">
+              <input id="button" type="button" value="确定" onclick="buttonClick();">
+              <p style="display: inline;font-size: 12px">选择日期后的数据是当天累计量</p>
+          </div>
+          <script>
+              function buttonClick() {
+                  var date = document.getElementById("date").value;
+                  window.location.href = "Servlet?Date="+date;
+              }
+          </script>
           <div id="virusSummary">
               <%
                   int totalip = (int) request.getAttribute("totalip");
