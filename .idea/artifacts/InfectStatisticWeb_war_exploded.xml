@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="InfectStatisticWeb:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/InfectStatisticWeb_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="InfectStatisticWeb" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="C:/Program Files/MySQL/mysql-connector-java-8.0.16.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.annotation.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.jms.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.persistence.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.resource.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.servlet.jsp.jstl.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.transaction.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="InfectStatisticWeb/web/Web" />
+    </root>
+  </artifact>
+</component>
