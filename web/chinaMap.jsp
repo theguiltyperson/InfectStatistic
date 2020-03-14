@@ -32,6 +32,19 @@
           <script>
               function buttonClick() {
                   var date = document.getElementById("date").value;
+                  if(date == null || date === ""){
+                      var newDate = new Date();
+                      var y = newDate.getFullYear();
+                      var m = newDate.getMonth() + 1;
+                      var d = newDate.getDate();
+                      if(m < 10){
+                          m = "0" + m;
+                      }
+                      if(d < 10){
+                          d = "0" + d;
+                      }
+                      date = y + "-" + m + "-" + d;
+                  }
                   window.location.href = "Servlet?Date="+date;
               }
           </script>
