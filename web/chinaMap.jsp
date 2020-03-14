@@ -25,7 +25,7 @@
               </div>
           </header>
           <div>
-              <input type="date" id="date" value="2020-03-13">
+              <input type="date" id="date" value="<%=request.getAttribute("date")%>">
               <input id="button" type="button" value="确定" onclick="buttonClick();">
               <p style="display: inline;font-size: 12px">选择日期后的数据是当天累计量</p>
           </div>

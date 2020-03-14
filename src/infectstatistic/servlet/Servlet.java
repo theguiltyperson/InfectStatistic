@@ -37,8 +37,8 @@ public class Servlet extends HttpServlet {
                     month = Integer.parseInt(province.getDate().substring(5,7));
                     day = Integer.parseInt(province.getDate().substring(8,10));
                     //日期不超过的累加
-                    if(year <= curYear){
-                        if(month <= curMonth){
+                    if(year == curYear){
+                        if(month == curMonth){
                             if(day <= curDay){
                                 ip +=province.getIp();
                                 sp += province.getSp();
@@ -46,8 +46,21 @@ public class Servlet extends HttpServlet {
                                 dead += province.getDead();
                             }
                         }
+                        else if(month < curMonth){
+                            ip +=province.getIp();
+                            sp += province.getSp();
+                            cure += province.getCure();
+                            dead += province.getDead();
+                        }
+                    }
+                    else if(year < curYear){
+                        ip +=province.getIp();
+                        sp += province.getSp();
+                        cure += province.getCure();
+                        dead += province.getDead();
                     }
                 }
+                req.setAttribute("date",date);
             }
             else{
                 //累加当地每天的数据
@@ -85,8 +98,8 @@ public class Servlet extends HttpServlet {
                     month = Integer.parseInt(province.getDate().substring(5,7));
                     day = Integer.parseInt(province.getDate().substring(8,10));
                     //日期不超过的累加
-                    if(year <= curYear){
-                        if(month <= curMonth){
+                    if(year == curYear){
+                        if(month == curMonth){
                             if(day <= curDay){
                                 ip +=province.getIp();
                                 sp += province.getSp();
@@ -94,6 +107,18 @@ public class Servlet extends HttpServlet {
                                 dead += province.getDead();
                             }
                         }
+                        else if(month < curMonth){
+                            ip +=province.getIp();
+                            sp += province.getSp();
+                            cure += province.getCure();
+                            dead += province.getDead();
+                        }
+                    }
+                    else if(year < curYear){
+                        ip +=province.getIp();
+                        sp += province.getSp();
+                        cure += province.getCure();
+                        dead += province.getDead();
                     }
                 }
                 String name;
@@ -107,17 +132,23 @@ public class Servlet extends HttpServlet {
                         year = Integer.parseInt(province.getDate().substring(0,4));
                         month = Integer.parseInt(province.getDate().substring(5,7));
                         day = Integer.parseInt(province.getDate().substring(8,10));
-                        if(year <= curYear){
-                            if(month <= curMonth){
+                        if(year == curYear){
+                            if(month == curMonth){
                                 if(day <= curDay){
                                     eachIp += province.getIp();
                                 }
                             }
+                            else if(month < curMonth){
+                                eachIp += province.getIp();
+                            }
+                        }
+                        else if(year < curYear){
+                            eachIp += province.getIp();
                         }
                     }
                     req.setAttribute(name+"Ip",eachIp);
                 }
-
+                req.setAttribute("date",date);
             }
             else{
                 //累加全国每天的数据
