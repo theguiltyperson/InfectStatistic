@@ -15,3 +15,16 @@
     + 7.util：DBUtill类封装数据库连接与关闭方法
 + 先运行infectstatistic.textProcess.Process.main;
   将静态数据写入数据库后，再把项目部署到tomcat
+  
++ 数据库
+```
+    CREATE TABLE `infectstatistic`.`province` (
+      `id` INT NOT NULL,
+      `name` VARCHAR(45)  NULL,
+      `date` VARCHAR(45) NULL,
+      `ip` INT NULL,
+      `sp` INT NULL,
+      `cure` INT NULL,
+      `dead` INT NULL);
+```
+    
